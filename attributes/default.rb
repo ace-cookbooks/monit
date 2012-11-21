@@ -11,6 +11,17 @@ Yours sincerely,
 monit
 EOS
 
+case node["platform_family"]
+when 'rhel', 'fedora'
+  default[:monit][:include_dir] = '/etc/monit.d'
+  default[:monit][:config_file] = '/etc/monit.conf'
+  default[:monit][:cert] = "/etc/monit.d/monit.pem"
+when 'debian'
+  default[:monit][:include_dir] = '/etc/monit/conf.d'
+  default[:monit][:config_file] = '/etc/monit/monitrc'
+  default[:monit][:cert] = "/etc/monit/monit.pem"
+end
+
 default[:monit][:mailserver][:host] = "localhost"
 default[:monit][:mailserver][:port] = nil
 default[:monit][:mailserver][:username] = nil
@@ -20,5 +31,4 @@ default[:monit][:mailserver][:password_suffix] = nil
 default[:monit][:port] = 3737
 default[:monit][:address] = "localhost"
 default[:monit][:ssl] = false
-default[:monit][:cert] = "/etc/monit/monit.pem"
 default[:monit][:allow] = ["localhost"]

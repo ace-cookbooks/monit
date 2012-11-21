@@ -9,13 +9,7 @@ if platform?("ubuntu")
   end
 end
 
-service "monit" do
-  action [:enable, :start]
-  enabled true
-  supports [:start, :restart, :stop]
-end
-
-directory "/etc/monit/conf.d/" do
+directory node[:monit][:include_dir] do
   owner  'root'
   group 'root'
   mode 0755
@@ -23,10 +17,16 @@ directory "/etc/monit/conf.d/" do
   recursive true
 end
 
-template "/etc/monit/monitrc" do
+template node[:monit][:config_file] do
   owner "root"
   group "root"
   mode 0700
   source 'monitrc.erb'
-  notifies :restart, resources(:service => "monit"), :delayed
+  notifies :restart, 'service[monit]', :delayed
+end
+
+service "monit" do
+  action [:enable, :start]
+  enabled true
+  supports [:start, :restart, :stop]
 end
