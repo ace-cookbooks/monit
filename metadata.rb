@@ -3,7 +3,7 @@ maintainer_email "apsoto@gmail.com"
 license          "MIT"
 description      "Configures monit.  Originally based off the 37 Signals Cookbook."
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "0.7"
+version          "0.7.1"
 
 %w(debian ubuntu redhat entos fedora).each do |os|
   supports os
